@@ -13,6 +13,144 @@
         transition-duration: 0.01ms !important;
       }
     }
+
+    @keyframes counter-bounce {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.4); }
+      100% { transform: scale(1); }
+    }
+
+    .counter-pop {
+      animation: counter-bounce 300ms ease-in-out;
+    }
+
+    /* ── Cat SVG base styles ─────────────────────────────────────────────── */
+    #cat-svg {
+      display: block;
+      width: 120px;
+      height: 120px;
+      overflow: visible;
+    }
+
+    /* ── Non-essential animations (respect prefers-reduced-motion) ────────── */
+    @media (prefers-reduced-motion: no-preference) {
+
+      /* idle: gentle floating bob */
+      @keyframes cat-idle-bob {
+        0%, 100% { transform: translateY(0); }
+        50%       { transform: translateY(-8px); }
+      }
+      .anim-idle {
+        animation: cat-idle-bob 2s ease-in-out infinite;
+      }
+
+      /* pet-0: blink — eyes close briefly */
+      @keyframes cat-pet-0-blink {
+        0%, 100% { transform: scaleY(1); }
+        40%, 60% { transform: scaleY(0.05); }
+      }
+      .anim-pet-0 .cat-eyes {
+        animation: cat-pet-0-blink 0.4s ease-in-out;
+        transform-origin: center;
+      }
+
+      /* pet-1: ear wiggle */
+      @keyframes cat-pet-1-ear {
+        0%, 100% { transform: rotate(0deg); }
+        30%       { transform: rotate(-12deg); }
+        70%       { transform: rotate(10deg); }
+      }
+      .anim-pet-1 .cat-ear-left  { animation: cat-pet-1-ear 0.5s ease-in-out; transform-origin: bottom center; }
+      .anim-pet-1 .cat-ear-right { animation: cat-pet-1-ear 0.5s ease-in-out 0.08s; transform-origin: bottom center; }
+
+      /* pet-2: tail flick */
+      @keyframes cat-pet-2-tail {
+        0%, 100% { transform: rotate(0deg); }
+        25%       { transform: rotate(20deg); }
+        75%       { transform: rotate(-20deg); }
+      }
+      .anim-pet-2 .cat-tail {
+        animation: cat-pet-2-tail 0.6s ease-in-out;
+        transform-origin: top left;
+      }
+
+      /* pet-3: head tilt */
+      @keyframes cat-pet-3-tilt {
+        0%, 100% { transform: rotate(0deg); }
+        40%       { transform: rotate(-10deg); }
+        70%       { transform: rotate(8deg); }
+      }
+      .anim-pet-3 {
+        animation: cat-pet-3-tilt 0.5s ease-in-out;
+        transform-origin: center bottom;
+      }
+
+      /* pet-4: happy bounce */
+      @keyframes cat-pet-4-bounce {
+        0%, 100% { transform: scale(1); }
+        30%       { transform: scale(1.15); }
+        60%       { transform: scale(0.92); }
+        80%       { transform: scale(1.06); }
+      }
+      .anim-pet-4 {
+        animation: cat-pet-4-bounce 0.5s ease-in-out;
+        transform-origin: center;
+      }
+
+      /* celebration: big bounce + spin */
+      @keyframes cat-celebration {
+        0%   { transform: scale(1) rotate(0deg); }
+        20%  { transform: scale(1.3) rotate(-15deg); }
+        50%  { transform: scale(1.4) rotate(15deg); }
+        75%  { transform: scale(1.1) rotate(-8deg); }
+        100% { transform: scale(1) rotate(0deg); }
+      }
+      .anim-celebration {
+        animation: cat-celebration 1.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+        transform-origin: center;
+      }
+
+      /* excited: rapid wiggle side to side */
+      @keyframes cat-excited {
+        0%, 100% { transform: translateX(0); }
+        15%       { transform: translateX(-6px) rotate(-4deg); }
+        30%       { transform: translateX(6px) rotate(4deg); }
+        45%       { transform: translateX(-5px) rotate(-3deg); }
+        60%       { transform: translateX(5px) rotate(3deg); }
+        75%       { transform: translateX(-3px) rotate(-2deg); }
+        90%       { transform: translateX(3px) rotate(2deg); }
+      }
+      .anim-excited {
+        animation: cat-excited 0.6s ease-in-out infinite;
+        transform-origin: center;
+      }
+
+      /* overwhelmed: slow shake + slight droop */
+      @keyframes cat-overwhelmed {
+        0%, 100% { transform: translateX(0) rotate(0deg); }
+        20%       { transform: translateX(-4px) rotate(-3deg); }
+        40%       { transform: translateX(4px) rotate(2deg); }
+        60%       { transform: translateX(-3px) rotate(-2deg); }
+        80%       { transform: translateX(3px) rotate(1deg); }
+      }
+      .anim-overwhelmed {
+        animation: cat-overwhelmed 1.2s ease-in-out infinite;
+        transform-origin: center bottom;
+      }
+
+      /* entrance: scale from 0 to 1 with bounce overshoot */
+      @keyframes cat-entrance {
+        0%   { transform: scale(0) rotate(-10deg); opacity: 0; }
+        60%  { transform: scale(1.2) rotate(5deg);  opacity: 1; }
+        80%  { transform: scale(0.9) rotate(-3deg); opacity: 1; }
+        100% { transform: scale(1) rotate(0deg);    opacity: 1; }
+      }
+      .anim-entrance {
+        animation: cat-entrance 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        transform-origin: center;
+      }
+
+    } /* end @media (prefers-reduced-motion: no-preference) */
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 flex items-center justify-center p-4">
@@ -30,8 +168,75 @@
         aria-label="Pet the cat"
         class="w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center rounded-full bg-white/40 backdrop-blur-sm shadow-lg cursor-pointer select-none focus:outline-none focus:ring-4 focus:ring-purple-400 focus:ring-offset-2 transition-transform hover:scale-105 active:scale-95"
       >
-        <!-- Cat SVG placeholder — will be replaced in Task 4 -->
-        <span class="text-8xl" aria-hidden="true">🐱</span>
+        <!-- Inline SVG cat character (Task 4.1) -->
+        <svg
+          id="cat-svg"
+          viewBox="0 0 120 120"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <!-- Tail -->
+          <g class="cat-tail">
+            <path
+              d="M 38 100 Q 10 110 14 90 Q 18 72 36 82"
+              fill="none"
+              stroke="#d8b4fe"
+              stroke-width="7"
+              stroke-linecap="round"
+            />
+          </g>
+
+          <!-- Body -->
+          <ellipse cx="60" cy="95" rx="28" ry="20" fill="#f5d0fe" />
+
+          <!-- Head -->
+          <circle cx="60" cy="62" r="32" fill="#fdf4ff" />
+
+          <!-- Left ear (outer) -->
+          <polygon class="cat-ear-left" points="28,42 20,14 46,34" fill="#e879f9" />
+          <!-- Left ear (inner) -->
+          <polygon class="cat-ear-left" points="30,40 24,20 44,35" fill="#fce7f3" />
+
+          <!-- Right ear (outer) -->
+          <polygon class="cat-ear-right" points="92,42 100,14 74,34" fill="#e879f9" />
+          <!-- Right ear (inner) -->
+          <polygon class="cat-ear-right" points="90,40 96,20 76,35" fill="#fce7f3" />
+
+          <!-- Eyes group (used for blink animation) -->
+          <g class="cat-eyes">
+            <!-- Left eye -->
+            <ellipse cx="47" cy="60" rx="6" ry="7" fill="#7c3aed" />
+            <ellipse cx="45" cy="58" rx="2" ry="2.5" fill="white" />
+            <!-- Right eye -->
+            <ellipse cx="73" cy="60" rx="6" ry="7" fill="#7c3aed" />
+            <ellipse cx="71" cy="58" rx="2" ry="2.5" fill="white" />
+          </g>
+
+          <!-- Nose -->
+          <ellipse cx="60" cy="70" rx="3.5" ry="2.5" fill="#f472b6" />
+
+          <!-- Mouth -->
+          <path
+            d="M 56 73 Q 60 77 64 73"
+            fill="none"
+            stroke="#f472b6"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          />
+
+          <!-- Whiskers left -->
+          <line x1="24" y1="68" x2="50" y2="70" stroke="#c084fc" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+          <line x1="24" y1="73" x2="50" y2="73" stroke="#c084fc" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+
+          <!-- Whiskers right -->
+          <line x1="96" y1="68" x2="70" y2="70" stroke="#c084fc" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+          <line x1="96" y1="73" x2="70" y2="73" stroke="#c084fc" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+
+          <!-- Blush marks -->
+          <ellipse cx="38" cy="74" rx="7" ry="4" fill="#fda4af" opacity="0.45" />
+          <ellipse cx="82" cy="74" rx="7" ry="4" fill="#fda4af" opacity="0.45" />
+        </svg>
       </div>
 
       <!-- Mood Indicator -->
@@ -120,6 +325,211 @@
           // JSON parse error or localStorage unavailable
           return defaultValue;
         }
+      },
+    };
+
+    // ─── StateStore ──────────────────────────────────────────────────────────
+    const StateStore = {
+      // Counters
+      sessionPets: 0,
+      allTimePets: 0,
+
+      // Mood
+      mood: 'calm',
+      recentPetTimestamps: [],
+
+      // Combo
+      comboActive: false,
+      comboCount: 0,
+      lastPetTimestamp: 0,
+
+      // Reactions
+      reactionPool: [],
+      reactionHistory: [],
+
+      // Milestones
+      unlockedMilestones: new Set(),
+
+      // Sound
+      soundEnabled: false,
+
+      persist() {
+        PersistenceManager.save(PersistenceManager.KEYS.ALL_TIME_PETS, this.allTimePets);
+        PersistenceManager.save(PersistenceManager.KEYS.SOUND_ENABLED, this.soundEnabled);
+      },
+
+      restore() {
+        this.allTimePets = PersistenceManager.load(PersistenceManager.KEYS.ALL_TIME_PETS, 0);
+        this.soundEnabled = PersistenceManager.load(PersistenceManager.KEYS.SOUND_ENABLED, false);
+      },
+
+      // Stubs — implemented in later tasks
+      registerPet() {
+        this.sessionPets += 1;
+        this.allTimePets += 1;
+        const now = Date.now();
+        this.lastPetTimestamp = now;
+        this.recentPetTimestamps.push(now);
+        // Prune timestamps older than 10-second rolling window
+        this.recentPetTimestamps = this.recentPetTimestamps.filter(t => t > now - 10000);
+        this.persist();
+      },
+      getMood() {},
+      getWeightedReaction() {},
+      checkMilestone() {},
+    };
+
+    // ─── InputHandler ────────────────────────────────────────────────────────
+    const InputHandler = {
+      /**
+       * Attach click, touchstart, and keydown listeners to catElement.
+       * All three normalise coordinates and call onPet({ x, y }).
+       * Events that do not originate on catElement are ignored.
+       *
+       * @param {HTMLElement} catElement
+       * @param {function({x: number, y: number}): void} onPet
+       */
+      attach(catElement, onPet) {
+        // Click — mouse interaction (Req 1.1, 1.5, 9.2)
+        catElement.addEventListener('click', (e) => {
+          onPet({ x: e.clientX, y: e.clientY });
+        });
+
+        // Touchstart — touch interaction; preventDefault stops the
+        // subsequent synthetic click so onPet is not called twice (Req 9.2)
+        catElement.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          const touch = e.changedTouches[0];
+          onPet({ x: touch.clientX, y: touch.clientY });
+        }, { passive: false });
+
+        // Keydown — Space or Enter while cat is focused (Req 9.3)
+        catElement.addEventListener('keydown', (e) => {
+          if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault(); // prevent page scroll on Space
+            const rect = catElement.getBoundingClientRect();
+            // Use the centre of the cat element as the interaction point
+            onPet({
+              x: rect.left + rect.width / 2,
+              y: rect.top + rect.height / 2,
+            });
+          }
+        });
+      },
+    };
+
+    // ─── renderCounter ───────────────────────────────────────────────────────
+    function renderCounter() {
+      const sessionEl = document.getElementById('session-count');
+      const alltimeEl = document.getElementById('alltime-count');
+
+      sessionEl.textContent = StateStore.sessionPets;
+      alltimeEl.textContent = StateStore.allTimePets;
+
+      // Trigger bounce animation on both counter elements
+      [sessionEl, alltimeEl].forEach(el => {
+        el.classList.remove('counter-pop');
+        // Force reflow so removing+re-adding the class restarts the animation
+        void el.offsetWidth;
+        el.classList.add('counter-pop');
+        el.addEventListener('animationend', () => el.classList.remove('counter-pop'), { once: true });
+      });
+    }
+
+    // ─── renderMoodIndicator ─────────────────────────────────────────────────
+    function renderMoodIndicator(mood) {
+      const moods = {
+        calm:        { emoji: '😊', label: 'Calm' },
+        happy:       { emoji: '😸', label: 'Happy' },
+        excited:     { emoji: '🤩', label: 'Excited' },
+        overwhelmed: { emoji: '😵', label: 'Overwhelmed' },
+      };
+      const { emoji, label } = moods[mood] ?? moods.calm;
+      document.getElementById('mood-emoji').textContent = emoji;
+      document.getElementById('mood-label').textContent = label;
+    }
+
+    // ─── CatAnimator ─────────────────────────────────────────────────────────
+    const CatAnimator = {
+      _currentState: 'idle',
+      _idleTimer: null,
+
+      /** Remove every anim-* class from #cat-svg */
+      _clearAll() {
+        const el = document.getElementById('cat-svg');
+        const toRemove = [...el.classList].filter(c => c.startsWith('anim-'));
+        el.classList.remove(...toRemove);
+      },
+
+      /** Cancel any pending return-to-idle timer, then schedule a new one (2 s) */
+      _scheduleIdle() {
+        if (this._idleTimer !== null) {
+          clearTimeout(this._idleTimer);
+          this._idleTimer = null;
+        }
+        this._idleTimer = setTimeout(() => {
+          this._idleTimer = null;
+          this.playIdle();
+        }, 2000);
+      },
+
+      /** Looping idle bob animation */
+      playIdle() {
+        this._clearAll();
+        document.getElementById('cat-svg').classList.add('anim-idle');
+        this._currentState = 'idle';
+      },
+
+      /**
+       * Play one of 5 pet animations (index 0–4), then return to idle after 2 s.
+       * @param {number} index  0–4
+       */
+      playPetAnimation(index) {
+        this._clearAll();
+        document.getElementById('cat-svg').classList.add(`anim-pet-${index}`);
+        this._currentState = `pet-${index}`;
+        this._scheduleIdle();
+      },
+
+      /** Celebration animation (milestone); returns to idle after 2 s */
+      playCelebration() {
+        this._clearAll();
+        document.getElementById('cat-svg').classList.add('anim-celebration');
+        this._currentState = 'celebration';
+        this._scheduleIdle();
+      },
+
+      /**
+       * Excited animation (combo state).
+       * Does NOT schedule idle — the combo manager controls when this ends.
+       */
+      playExcited() {
+        this._clearAll();
+        document.getElementById('cat-svg').classList.add('anim-excited');
+        this._currentState = 'excited';
+      },
+
+      /**
+       * Overwhelmed animation.
+       * Does NOT schedule idle — the mood system controls when this ends.
+       */
+      playOverwhelmed() {
+        this._clearAll();
+        document.getElementById('cat-svg').classList.add('anim-overwhelmed');
+        this._currentState = 'overwhelmed';
+      },
+
+      /**
+       * Entrance animation played once on load (≈1 s, within the 0.5–1.5 s range),
+       * then automatically transitions to playIdle().
+       */
+      playEntrance() {
+        this._clearAll();
+        document.getElementById('cat-svg').classList.add('anim-entrance');
+        this._currentState = 'entrance';
+        setTimeout(() => {
+          this.playIdle();
+        }, 1000);
       },
     };
 

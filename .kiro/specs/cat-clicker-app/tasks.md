@@ -13,8 +13,8 @@ Build a self-contained `index.html` single-page app using HTML5, Tailwind CSS, a
   - Add cat placeholder element with `tabindex="0"` and ARIA label for keyboard focus
   - _Requirements: 9.1, 9.4, 10.1, 10.2, 10.4_
 
-- [ ] 2. Implement PersistenceManager and StateStore
-  - [-] 2.1 Implement `PersistenceManager` with `save()`, `load()`, and try/catch for unavailable localStorage
+- [x] 2. Implement PersistenceManager and StateStore
+  - [x] 2.1 Implement `PersistenceManager` with `save()`, `load()`, and try/catch for unavailable localStorage
     - Validate restored values (type check, `allTimePets >= 0`) and fall back to defaults on corruption
     - _Requirements: 4.3, 4.4, 8.3, 8.5_
 
@@ -22,7 +22,7 @@ Build a self-contained `index.html` single-page app using HTML5, Tailwind CSS, a
     - **Property 5: Persistence round-trip**
     - **Validates: Requirements 4.3, 4.4, 8.3**
 
-  - [~] 2.3 Implement `StateStore` with all fields and `restore()` / `persist()` methods
+  - [x] 2.3 Implement `StateStore` with all fields and `restore()` / `persist()` methods
     - Wire `PersistenceManager` into `restore()` on init and `persist()` after every mutation
     - _Requirements: 4.3, 4.4, 8.3, 8.5_
 
@@ -30,25 +30,25 @@ Build a self-contained `index.html` single-page app using HTML5, Tailwind CSS, a
     - **Property 1: Pet counter always increments by exactly 1**
     - **Validates: Requirements 1.1**
 
-- [ ] 3. Implement InputHandler and core pet registration
-  - [~] 3.1 Implement `InputHandler.attach()` listening for `click`, `touchstart`, and `keydown` (Space/Enter)
+- [x] 3. Implement InputHandler and core pet registration
+  - [x] 3.1 Implement `InputHandler.attach()` listening for `click`, `touchstart`, and `keydown` (Space/Enter)
     - Ensure events outside the cat element do not call `onPet()`
     - _Requirements: 1.1, 1.5, 9.2, 9.3_
 
-  - [~] 3.2 Implement `StateStore.registerPet()` to increment `sessionPets`, `allTimePets`, update `lastPetTimestamp`, and push to `recentPetTimestamps`
+  - [x] 3.2 Implement `StateStore.registerPet()` to increment `sessionPets`, `allTimePets`, update `lastPetTimestamp`, and push to `recentPetTimestamps`
     - Call `persist()` after each registration
     - _Requirements: 1.1, 4.3_
 
-  - [~] 3.3 Render the pet counter and animate it on change (scale/bounce CSS transition)
+  - [x] 3.3 Render the pet counter and animate it on change (scale/bounce CSS transition)
     - Display both session and all-time totals
     - _Requirements: 4.1, 4.2, 4.5_
 
 - [ ] 4. Implement CatAnimator and entrance animation
-  - [~] 4.1 Create the cat SVG/CSS character with idle, pet (×5), celebration, excited, and overwhelmed animation classes
+  - [x] 4.1 Create the cat SVG/CSS character with idle, pet (×5), celebration, excited, and overwhelmed animation classes
     - Use CSS `@keyframes` for each animation; respect `prefers-reduced-motion` by wrapping non-essential animations in a media query
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 9.6, 10.5_
 
-  - [~] 4.2 Implement `CatAnimator` methods: `playIdle()`, `playPetAnimation(index)`, `playCelebration()`, `playExcited()`, `playOverwhelmed()`, `playEntrance()`
+  - [-] 4.2 Implement `CatAnimator` methods: `playIdle()`, `playPetAnimation(index)`, `playCelebration()`, `playExcited()`, `playOverwhelmed()`, `playEntrance()`
     - `playEntrance()` runs once on load (0.5–1.5 s), then transitions to `playIdle()`
     - Return-to-idle timer (2 s after last pet) managed here
     - _Requirements: 1.3, 1.4, 2.2, 2.3, 2.4, 10.5_
