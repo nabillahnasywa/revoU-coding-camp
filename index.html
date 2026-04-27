@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cat Clicker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Reduced motion: disable non-essential animations */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 flex items-center justify-center p-4">
+
+  <main class="flex flex-col items-center gap-6 w-full max-w-md">
+
+    <!-- Cat Stage -->
+    <section id="cat-stage" class="flex flex-col items-center gap-4 w-full">
+
+      <!-- Cat placeholder -->
+      <div
+        id="cat"
+        tabindex="0"
+        role="button"
+        aria-label="Pet the cat"
+        class="w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center rounded-full bg-white/40 backdrop-blur-sm shadow-lg cursor-pointer select-none focus:outline-none focus:ring-4 focus:ring-purple-400 focus:ring-offset-2 transition-transform hover:scale-105 active:scale-95"
+      >
+        <!-- Cat SVG placeholder — will be replaced in Task 4 -->
+        <span class="text-8xl" aria-hidden="true">🐱</span>
+      </div>
+
+      <!-- Mood Indicator -->
+      <div
+        id="mood-indicator"
+        role="status"
+        aria-live="polite"
+        aria-label="Cat mood"
+        class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 backdrop-blur-sm shadow text-sm font-medium text-purple-800"
+      >
+        <span id="mood-emoji" aria-hidden="true">😊</span>
+        <span id="mood-label">Calm</span>
+      </div>
+
+    </section>
+
+    <!-- Counter Display -->
+    <section
+      id="counter-display"
+      aria-label="Pet counter"
+      class="flex gap-6 px-6 py-4 rounded-2xl bg-white/50 backdrop-blur-sm shadow text-center"
+    >
+      <div class="flex flex-col items-center">
+        <span class="text-xs uppercase tracking-wide text-purple-600 font-semibold">This Session</span>
+        <span id="session-count" class="text-3xl font-bold text-purple-900 tabular-nums transition-transform">0</span>
+        <span class="text-xs text-purple-500">pets</span>
+      </div>
+      <div class="w-px bg-purple-200"></div>
+      <div class="flex flex-col items-center">
+        <span class="text-xs uppercase tracking-wide text-purple-600 font-semibold">All Time</span>
+        <span id="alltime-count" class="text-3xl font-bold text-purple-900 tabular-nums transition-transform">0</span>
+        <span class="text-xs text-purple-500">pets</span>
+      </div>
+    </section>
+
+    <!-- Sound Toggle -->
+    <button
+      id="sound-toggle"
+      type="button"
+      aria-label="Sound is off — click to enable"
+      aria-pressed="false"
+      class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 backdrop-blur-sm shadow text-sm font-medium text-purple-800 hover:bg-white/70 focus:outline-none focus:ring-4 focus:ring-purple-400 focus:ring-offset-2 transition-colors"
+    >
+      <span id="sound-icon" aria-hidden="true">🔇</span>
+      <span id="sound-label">Sound Off</span>
+    </button>
+
+  </main>
+
+  <script>
+    // ─── PersistenceManager ───────────────────────────────────────────────────
+    const PersistenceManager = {
+      KEYS: {
+        ALL_TIME_PETS: 'cat_clicker_all_time_pets',
+        SOUND_ENABLED: 'cat_clicker_sound_enabled',
+      },
+
+      save(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+        } catch (_) {
+          // localStorage unavailable (e.g. private mode) — silently ignore
+        }
+      },
+
+      load(key, defaultValue) {
+        try {
+          const raw = localStorage.getItem(key);
+          if (raw === null) return defaultValue;
+
+          const parsed = JSON.parse(raw);
+
+          // Validate by key
+          if (key === this.KEYS.ALL_TIME_PETS) {
+            if (typeof parsed !== 'number' || parsed < 0 || !isFinite(parsed)) {
+              return defaultValue;
+            }
+          } else if (key === this.KEYS.SOUND_ENABLED) {
+            if (typeof parsed !== 'boolean') {
+              return defaultValue;
+            }
+          }
+
+          return parsed;
+        } catch (_) {
+          // JSON parse error or localStorage unavailable
+          return defaultValue;
+        }
+      },
+    };
+
+    // ─── Future tasks will be implemented below ───────────────────────────────
+  </script>
+
+</body>
+</html>
